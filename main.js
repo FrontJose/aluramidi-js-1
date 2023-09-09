@@ -1,49 +1,38 @@
-/*
-function tocaSomPom () {
-    document.querySelector('#som_tecla_pom').play();
-} 
-
-document.querySelector('.tecla_pom').onclick = tocaSomPom;
-
-document.querySelectorAll('.tecla');
-
-declarando uma função basica
-function tocaSomPom () {
-    document.querySelector('#som_tecla_pom').play();
+// Definimos a função 'tocaSom' que recebe o 'idElementoAudio' como parâmetro.
+function tocaSom(seletorAudio) {
+    // Usando o 'document.querySelector', selecionamos o elemento de áudio com o ID especificado e o reproduzimos.
+    document.querySelector(seletorAudio).play();
 }
 
- referencias devem ser criadas com base no valor que será guardado
-const listaDeTeclas = document.querySelectorAll('.tecla');
-para colocar lista tem que colocar o colchetes []
-listaDeTeclas[0].onclick = tocaSomPom;
-*/
-
-function tocaSom (idElementoAudio) {
-
-    document.querySelector(idElementoAudio).play();
-
-}
-
+// Selecionamos todos os elementos HTML com a classe CSS "tecla" e armazenamos em uma lista na variável 'listaDeTeclas'.
 const listaDeTeclas = document.querySelectorAll('.tecla');
 
-let contador = 0;
-
-//enquanto
-while (contador < listaDeTeclas.length) {
-
+// Iniciamos um loop 'for' para percorrer cada elemento na 'listaDeTeclas'.
+for (contador = 0; contador < listaDeTeclas.length; contador++) {
+    // Para cada elemento na lista, armazenamos o elemento atual na variável 'tecla'.
     const tecla = listaDeTeclas[contador];
-    
+
+    // Obtemos a segunda classe CSS do elemento 'tecla' e a armazenamos na variável 'instrumento'.
     const instrumento = tecla.classList[1];
-    console.log(instrumento)
 
-    //                   crase template string
+    // Criamos uma string 'idAudio' usando uma template string, que é usada para construir o seletor de ID do elemento de áudio relacionado ao instrumento.
     const idAudio = `#som_${instrumento}`;
-    
 
+    // Configuramos um evento de clique ('onclick') para o elemento 'tecla'.
+    // Quando a tecla é clicada, a função 'tocaSom' é chamada, reproduzindo o som associado ao instrumento.
     tecla.onclick = function () {
         tocaSom(idAudio);
     }
 
-    contador = contador + 1;
+    tecla.onkeydown = function (event) {
+        if(event.code === 'Space' || event.code === 'Enter') {
+            tecla.classList.add('ativa');
+        }
+    }
+
+    tecla.onkeyup = function () {
+        tecla.classList.remove('ativa');
+    
+    }
 
 }
